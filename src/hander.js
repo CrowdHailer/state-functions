@@ -6,6 +6,8 @@ function touchHandler(event){
   if (event.type === 'touch') {
     results.push('start');
     return startHandler;
+  } else {
+    return touchHandler;
   }
 }
 
@@ -16,6 +18,8 @@ function dragHandler(event){
   } else if (event.type === 'release') {
     results.push('end');
     return touchHandler;
+  } else {
+    return dragHandler;
   }
 }
 
@@ -26,6 +30,8 @@ function pinchHandler(event){
   } else if (event.type === 'release') {
     results.push('end');
     return touchHandler;
+  } else {
+    return pinchHandler;
   }
 }
 
@@ -39,6 +45,8 @@ function startHandler(event){
   } else if (event.type === 'release') {
     results.push('end');
     return touchHandler;
+  } else {
+    return startHandler;
   }
 }
 gestureHandler = touchHandler;

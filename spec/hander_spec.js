@@ -75,4 +75,29 @@ describe('handler', function(){
     gestureHandler = gestureHandler({type: 'touch'});
     expect(results).toEqual(['start', 'scale', 'end', 'start']);
   });
+  it('should work after invalid events', function(){
+    gestureHandler = gestureHandler({type: 'drag'});
+    gestureHandler = gestureHandler({type: 'touch'});
+    expect(results).toEqual(['start']);
+  });
+  it('should ignore unknown events in the start handler', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'other'});
+    gestureHandler = gestureHandler({type: 'drag'});
+    expect(results).toEqual(['start', 'drag']);
+  });
+  it('should ignore unknown events in the drag handler', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'drag'});
+    gestureHandler = gestureHandler({type: 'other'});
+    gestureHandler = gestureHandler({type: 'drag'});
+    expect(results).toEqual(['start', 'drag', 'drag']);
+  });
+  it('should ignore unknown events in the pinch handler', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'pinch'});
+    gestureHandler = gestureHandler({type: 'other'});
+    gestureHandler = gestureHandler({type: 'pinch'});
+    expect(results).toEqual(['start', 'scale', 'scale']);
+  });
 });
