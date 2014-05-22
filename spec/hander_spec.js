@@ -35,14 +35,24 @@ describe('handler', function(){
     gestureHandler = gestureHandler({type: 'touch'});
     gestureHandler = gestureHandler({type: 'drag'});
     gestureHandler = gestureHandler({type: 'drag'});
-    gestureHandler = gestureHandler({type: 'drag'});
-    expect(results).toEqual(['start', 'drag', 'drag', 'drag']);
+    expect(results).toEqual(['start', 'drag', 'drag']);
   });
   it('should call multiple scales after first', function(){
     gestureHandler = gestureHandler({type: 'touch'});
     gestureHandler = gestureHandler({type: 'pinch'});
     gestureHandler = gestureHandler({type: 'pinch'});
+    expect(results).toEqual(['start', 'scale', 'scale']);
+  });
+  it('should not call scale after first drag', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'drag'});
     gestureHandler = gestureHandler({type: 'pinch'});
-    expect(results).toEqual(['start', 'scale', 'scale', 'scale']);
+    expect(results).toEqual(['start', 'drag']);
+  });
+  it('should not call drag after first pinch', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'pinch'});
+    gestureHandler = gestureHandler({type: 'drag'});
+    expect(results).toEqual(['start', 'scale']);
   });
 });

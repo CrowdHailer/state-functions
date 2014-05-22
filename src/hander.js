@@ -9,13 +9,27 @@ function touchHandler(event){
   } 
 }
 
+function dragHandler(event){
+  if (event.type === 'drag') {
+    results.push('drag');
+    return dragHandler;
+  }
+}
+
+function pinchHandler(event){
+  if (event.type === 'pinch') {
+    results.push('scale');
+    return pinchHandler;
+  }
+}
+
 function startHandler(event){
   if (event.type === 'drag') {
     results.push('drag');
-    return startHandler;
+    return dragHandler;
   } else if (event.type === 'pinch') {
     results.push('scale');
-    return startHandler;
+    return pinchHandler;
   } else if (event.type === 'release') {
     results.push('end');
   }
