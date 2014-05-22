@@ -6,53 +6,54 @@ var actions = {
   touch: function(event){
     results.push('start');
     return startHandler;
+  },
+  drag: function(event){
+    results.push('drag');
+    return dragHandler;
+  },
+  pinch: function(event){
+    results.push('scale');
+    return pinchHandler;
+  },
+  release: function(event){
+    results.push('end');
+    return touchHandler;
   }
 };
 
 function touchHandler(event){
-  if (actions[event.type]) {
-    return actions[event.type](event);
+  var localActions = _.limit('touch')(actions);
+  if (localActions[event.type]) {
+    return localActions[event.type](event);
   } else {
     return arguments.callee;
   }
 }
 
 function dragHandler(event){
-  if (event.type === 'drag') {
-    results.push('drag');
-    return dragHandler;
-  } else if (event.type === 'release') {
-    results.push('end');
-    return touchHandler;
+  var localActions = _.limit('drag', 'release')(actions);
+  if (localActions[event.type]) {
+    return localActions[event.type](event);
   } else {
-    return dragHandler;
+    return arguments.callee;
   }
 }
 
 function pinchHandler(event){
-  if (event.type === 'pinch') {
-    results.push('scale');
-    return pinchHandler;
-  } else if (event.type === 'release') {
-    results.push('end');
-    return touchHandler;
+  var localActions = _.limit('pinch', 'release')(actions);
+  if (localActions[event.type]) {
+    return actions[event.type](event);
   } else {
-    return pinchHandler;
+    return arguments.callee;
   }
 }
 
 function startHandler(event){
-  if (event.type === 'drag') {
-    results.push('drag');
-    return dragHandler;
-  } else if (event.type === 'pinch') {
-    results.push('scale');
-    return pinchHandler;
-  } else if (event.type === 'release') {
-    results.push('end');
-    return touchHandler;
+  var localActions = _.limit('drag', 'pinch', 'release')(actions);
+  if (localActions[event.type]) {
+    return localActions[event.type](event);
   } else {
-    return startHandler;
+    return arguments.callee;
   }
 }
 gestureHandler = touchHandler;
