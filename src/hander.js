@@ -2,12 +2,18 @@ var gestureHandler, results;
 
 results = [];
 
-function touchHandler(event){
-  if (event.type === 'touch') {
+var actions = {
+  touch: function(event){
     results.push('start');
     return startHandler;
+  }
+};
+
+function touchHandler(event){
+  if (actions[event.type]) {
+    return actions[event.type](event);
   } else {
-    return touchHandler;
+    return arguments.callee;
   }
 }
 
