@@ -1,0 +1,6 @@
+{
+  "name": "statefunctions",
+  "dependencies": {
+    "cuminjs": "CrowdHailer/cuminjs"
+  }
+}

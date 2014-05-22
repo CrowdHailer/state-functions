@@ -3,6 +3,7 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
+      'bower_components/cuminjs/dist/cuminjs.js',
       'src/hander.js',
       'spec/hander_spec.js'
     ],
