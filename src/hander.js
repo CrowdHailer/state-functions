@@ -12,6 +12,10 @@ function touchHandler(event){
 function startHandler(event){
   if (event.type === 'drag') {
     results.push('drag');
+  } else if (event.type === 'pinch') {
+    results.push('scale');
+  } else if (event.type === 'release') {
+    results.push('end');
   }
 }
 gestureHandler = touchHandler;

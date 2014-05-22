@@ -21,4 +21,14 @@ describe('handler', function(){
     gestureHandler({type: 'drag'});
     expect(results).toEqual(['start', 'drag']);
   });
+  it('should call scale after pinch handler', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler({type: 'pinch'});
+    expect(results).toEqual(['start', 'scale']);
+  });
+  it('should call end after release handler', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler({type: 'release'});
+    expect(results).toEqual(['start', 'end']);
+  });
 });
