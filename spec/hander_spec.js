@@ -55,4 +55,24 @@ describe('handler', function(){
     gestureHandler = gestureHandler({type: 'drag'});
     expect(results).toEqual(['start', 'scale']);
   });
+  it('should be ready to start after end events', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'release'});
+    gestureHandler = gestureHandler({type: 'touch'});
+    expect(results).toEqual(['start', 'end', 'start']);
+  });
+  it('should be ready to start after dragend events', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'drag'});
+    gestureHandler = gestureHandler({type: 'release'});
+    gestureHandler = gestureHandler({type: 'touch'});
+    expect(results).toEqual(['start', 'drag', 'end', 'start']);
+  });
+  it('should be ready to start after pinchend events', function(){
+    gestureHandler = gestureHandler({type: 'touch'});
+    gestureHandler = gestureHandler({type: 'pinch'});
+    gestureHandler = gestureHandler({type: 'release'});
+    gestureHandler = gestureHandler({type: 'touch'});
+    expect(results).toEqual(['start', 'scale', 'end', 'start']);
+  });
 });
